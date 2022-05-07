@@ -1,8 +1,12 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"math/rand"
+	"os"
+	"strconv"
+	"strings"
 	"time"
 )
 
@@ -18,19 +22,17 @@ func main() {
 	fmt.Println("\t2.User input a number")
 	fmt.Println("\t3.Output the result of contrast(if smaller then back to the first setup, else break)")
 	// 构建一个读取用户输入的一个stream
-	// render := bufio.NewReader(os.Stdin)
+	render := bufio.NewReader(os.Stdin)
 
 	for {
 		fmt.Print("Please input your guess number: ")
-		// input, err := render.ReadString('\n')
-		var inputNum int
-		_, err := fmt.Scanf("%d\n", &inputNum)
+		input, err := render.ReadString('\n')
 		if err != nil {
 			fmt.Println("Read user input error.")
 			continue
 		}
-		// input = strings.TrimSuffix(input, "\n")
-		// inputNum, err := strconv.Atoi(input)
+		input = strings.TrimSuffix(input, "\n")
+		inputNum, err := strconv.Atoi(input)
 		if err != nil {
 			fmt.Println("Invaild Input")
 			continue
