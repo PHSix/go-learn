@@ -25,8 +25,8 @@ func newCreateTopicFlow(title string, content string) *createTopicFlow {
 	}
 }
 func (t createTopicFlow) checkParam() error {
-	if len(utf16.Encode([]rune(t.Content))) < 100 {
-		return errors.New("topic content must more than 100")
+	if len(utf16.Encode([]rune(t.Content))) < 50 {
+		return errors.New("topic content must more than 50")
 	}
 	return nil
 }
@@ -36,7 +36,7 @@ func (t *createTopicFlow) do() (int64, error) {
 	if err := t.checkParam(); err != nil {
 		return 0, err
 	}
-	topicId := repository.GetNextId()
+	topicId := repository.GetTopicNextId()
 	t.Id = topicId
 	if err := t.create(); err != nil {
 		return 0, err
