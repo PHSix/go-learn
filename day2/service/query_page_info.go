@@ -11,27 +11,27 @@ type PageInfo struct {
 	PostList []*repository.Post
 }
 
-type QueryPageInfoFlow struct {
+type queryPageInfoFlow struct {
 	topicId  int64
 	pageInfo *PageInfo
 	topic    *repository.Topic
 	posts    []*repository.Post
 }
 
-func NewQueryPageInfoFlow(id int64) *QueryPageInfoFlow {
-	return &QueryPageInfoFlow{
+func newQueryPageInfoFlow(id int64) *queryPageInfoFlow {
+	return &queryPageInfoFlow{
 		topicId: id,
 	}
 }
 
-func (f QueryPageInfoFlow) checkParam() error {
+func (f queryPageInfoFlow) checkParam() error {
 	if f.topicId < 0 {
 		return errors.New("topic id must bigger than 0")
 	}
 	return nil
 }
 
-func (f *QueryPageInfoFlow) prepareInfo() error {
+func (f *queryPageInfoFlow) prepareInfo() error {
 	var wg sync.WaitGroup
 
 	wg.Add(2)
@@ -52,7 +52,7 @@ func (f *QueryPageInfoFlow) prepareInfo() error {
 
 }
 
-func (f *QueryPageInfoFlow) packPageInfo() error {
+func (f *queryPageInfoFlow) packPageInfo() error {
 	f.pageInfo = &PageInfo{
 		Topic:    f.topic,
 		PostList: f.posts,
@@ -60,7 +60,7 @@ func (f *QueryPageInfoFlow) packPageInfo() error {
 	return nil
 }
 
-func (f *QueryPageInfoFlow) Do() (*PageInfo, error) {
+func (f *queryPageInfoFlow) do() (*PageInfo, error) {
 	if err := f.checkParam(); err != nil {
 		return nil, err
 	}
@@ -74,5 +74,5 @@ func (f *QueryPageInfoFlow) Do() (*PageInfo, error) {
 }
 
 func QueryPageInfo(topicId int64) (*PageInfo, error) {
-	return NewQueryPageInfoFlow(topicId).Do()
+	return newQueryPageInfoFlow(topicId).do()
 }

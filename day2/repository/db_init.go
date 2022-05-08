@@ -22,6 +22,9 @@ func initTopicIndexMap(filePath string) error {
 			return err
 		}
 		topicTmp[topic.Id] = &topic
+		if topic.Id > nextId {
+			nextId = topic.Id
+		}
 	}
 	topicIndexMap = topicTmp
 	return nil

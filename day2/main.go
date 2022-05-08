@@ -1,10 +1,12 @@
 package main
 
 import (
+	"bufio"
+	"io/ioutil"
 	"log"
 	"os"
 
-	cotroller "go-learn/day2/controller"
+	"go-learn/day2/controller"
 	"go-learn/day2/repository"
 
 	"github.com/gin-gonic/gin"
@@ -17,7 +19,20 @@ func main() {
 	r := gin.Default()
 	r.GET("/community/page/get/:id", func(c *gin.Context) {
 		topicId := c.Param("id")
-		data := cotroller.QueryPageInfo(topicId)
+		// data := controller.QueryPageInfo(topicId)
+		data := controller.QueryPageInfo(topicId)
+		c.JSON(200, data)
+	})
+
+	r.POST("/community/page/add", func(c *gin.Context) {
+		bodyReader := bufio.NewReader(c.Request.Body)
+		body, err := ioutil.ReadAll(bodyReader)
+		if err != nil {
+			c.JSON(400, gin.H{})
+			return
+		}
+		data := controller.CreateTopic(body)
+
 		c.JSON(200, data)
 	})
 	err := r.Run(":5000")
