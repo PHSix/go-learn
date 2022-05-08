@@ -7,13 +7,13 @@ type Topic struct {
 	Id         int64  `json:"id"`
 	Title      string `json:"title"`
 	Content    string `json:"content"`
-	CreateTime string `json:"createTime"`
+	CreateTime int64  `json:"createTime"`
 }
 
 var (
 	topicIndexMap map[int64]*Topic
 	topicDao      *TopicDao
-	topicOnce     *sync.Once
+	topicOnce     sync.Once
 )
 
 // 单例模式，为了节省内存

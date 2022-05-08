@@ -3,6 +3,7 @@ package repository
 import (
 	"bufio"
 	"encoding/json"
+	"log"
 	"os"
 )
 
@@ -47,10 +48,12 @@ func initPostIndexMap(filePath string) error {
 }
 
 func Init(filePath string) error {
-	if err := initTopicIndexMap(filePath); err != nil {
+	if err := initPostIndexMap(filePath); err != nil {
+		log.Println("init post map failed")
 		return err
 	}
-	if err := initPostIndexMap(filePath); err != nil {
+	if err := initTopicIndexMap(filePath); err != nil {
+		log.Println("init topic map failed")
 		return err
 	}
 	return nil

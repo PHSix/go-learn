@@ -1,12 +1,13 @@
 package main
 
 import (
+	"log"
 	"os"
 
 	cotroller "go-learn/day2/controller"
 	"go-learn/day2/repository"
 
-	"gopkg.in/gin-gonic/gin.v1"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
@@ -19,7 +20,7 @@ func main() {
 		data := cotroller.QueryPageInfo(topicId)
 		c.JSON(200, data)
 	})
-	err := r.Run()
+	err := r.Run(":5000")
 	if err != nil {
 		return
 	}
@@ -27,6 +28,7 @@ func main() {
 
 func Init(filePath string) error {
 	if err := repository.Init(filePath); err != nil {
+		log.Println("init repository failed")
 		return err
 	}
 	return nil
